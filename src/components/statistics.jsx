@@ -6,7 +6,8 @@ const getAdditionalInfo = ({ good, neutral, bad }) => {
       <p>Bad: {bad}</p>
       <p>Total feedbacks: {good + neutral + bad}</p>
       <p>
-        Percent of positive FeedBacks: {(good / (good + neutral + bad)) * 100}%
+        Percent of positive FeedBacks:{' '}
+        {Math.round((good / (good + neutral + bad)) * 100)}%
       </p>
     </div>
   );

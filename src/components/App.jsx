@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import AdditionalData from './statistics';
+// import Controls from './controls';
 
 class Feedback extends Component {
   state = {
@@ -8,59 +9,39 @@ class Feedback extends Component {
     bad: 0,
   };
 
-  getAdditionalInfo() {
-    return (
-      <div>
-        <p>Good: {this.state.good}</p>
-        <p>Neutral: {this.state.neutral}</p>
-        <p>Bad: {this.state.bad}</p>
-        <p>Total feedbacks: {this.countTotalFeedback()}</p>
-        <p>
-          Percent of positive FeedBacks:{' '}
-          {this.countPositiveFeedbackPercentage()}%
-        </p>
-      </div>
-    );
-  }
-
-  countPositiveFeedbackPercentage() {
-    return Math.round(
-      (this.state.good /
-        (this.state.good + this.state.neutral + this.state.bad)) *
-        100
-    );
-  }
-
-  countTotalFeedback() {
-    return this.state.good + this.state.neutral + this.state.bad;
-  }
+  handleSetFeddback = ({ name }) => {
+    this.setState(prev => ({
+      [name]: prev[name] + 1,
+    }));
+  };
 
   render() {
     return (
       <div>
+        {/* <Controls /> */}
         <button
           className="button good"
-          onClick={() => {
-            this.setState({ good: this.state.good + 1 });
-            console.log(this.state);
+          name="good"
+          onClick={e => {
+            this.handleSetFeddback(e.target);
           }}
         >
           Good
         </button>
         <button
           className="button neutral"
-          onClick={() => {
-            this.setState({ neutral: this.state.neutral + 1 });
-            console.log(this.state);
+          name="neutral"
+          onClick={e => {
+            this.handleSetFeddback(e.target);
           }}
         >
           Neutral
         </button>
         <button
           className="button bad"
-          onClick={() => {
-            this.setState({ bad: this.state.bad + 1 });
-            console.log(this.state);
+          name="bad"
+          onClick={e => {
+            this.handleSetFeddback(e.target);
           }}
         >
           Bad
@@ -68,7 +49,11 @@ class Feedback extends Component {
         <p className="stat_label">STATISTICS</p>
 
         {this.state.good || this.state.neutral || this.state.bad > 0 ? (
-          this.getAdditionalInfo()
+          <AdditionalData
+            good={this.state.good}
+            neutral={this.state.neutral}
+            bad={this.state.bad}
+          />
         ) : (
           <p>No statistics data</p>
         )}
@@ -81,11 +66,6 @@ export const App = () => {
   return (
     <div>
       <Feedback />
-      <AdditionalData
-        good={Feedback.state.good}
-        neutral={Feedback.state.neutral}
-        bad={Feedback.state.bad}
-      />
     </div>
   );
 };
