@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import AdditionalData from './statistics';
-// import Controls from './controls';
+import Controls from './controls';
 
 class Feedback extends Component {
   state = {
@@ -18,34 +18,11 @@ class Feedback extends Component {
   render() {
     return (
       <div>
-        {/* <Controls /> */}
-        <button
-          className="button good"
-          name="good"
-          onClick={e => {
+        <Controls
+          handleSetFeddback={e => {
             this.handleSetFeddback(e.target);
           }}
-        >
-          Good
-        </button>
-        <button
-          className="button neutral"
-          name="neutral"
-          onClick={e => {
-            this.handleSetFeddback(e.target);
-          }}
-        >
-          Neutral
-        </button>
-        <button
-          className="button bad"
-          name="bad"
-          onClick={e => {
-            this.handleSetFeddback(e.target);
-          }}
-        >
-          Bad
-        </button>
+        />
         <p className="stat_label">STATISTICS</p>
 
         {this.state.good || this.state.neutral || this.state.bad > 0 ? (
