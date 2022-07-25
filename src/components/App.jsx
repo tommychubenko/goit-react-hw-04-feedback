@@ -1,43 +1,46 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import AdditionalData from './statistics';
 import Controls from './controls';
 
-class Feedback extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+const Feedback = () => {
+  const [counter, setCounter] = useState({ good: 0, neutral: 0, bad: 0 });
+  // const [good, setGood] = useState(0);
+  // const [neutral, setNeutral] = useState(0);
+  // const [bad, setBad] = useState(0);
+
+  // class Feedback extends Component {
+
+  // state = {
+  //   good: 0,
+  //   neutral: 0,
+  //   bad: 0,
+  // };
+
+  const handleSetFeddback = ({ name }) => {
+    setCounter(prevState => ({ ...prevState, [name]: prevState[name] + 1 }));
   };
 
-  handleSetFeddback = ({ name }) => {
-    this.setState(prev => ({
-      [name]: prev[name] + 1,
-    }));
-  };
+  return (
+    <div>
+      <Controls
+        handleSetFeddback={e => {
+          handleSetFeddback(e.target);
+        }}
+      />
+      <p className="stat_label">STATISTICS</p>
 
-  render() {
-    return (
-      <div>
-        <Controls
-          handleSetFeddback={e => {
-            this.handleSetFeddback(e.target);
-          }}
+      {counter.good || counter.neutral || counter.bad > 0 ? (
+        <AdditionalData
+          good={counter.good}
+          neutral={counter.neutral}
+          bad={counter.bad}
         />
-        <p className="stat_label">STATISTICS</p>
-
-        {this.state.good || this.state.neutral || this.state.bad > 0 ? (
-          <AdditionalData
-            good={this.state.good}
-            neutral={this.state.neutral}
-            bad={this.state.bad}
-          />
-        ) : (
-          <p>No statistics data</p>
-        )}
-      </div>
-    );
-  }
-}
+      ) : (
+        <p>No statistics data</p>
+      )}
+    </div>
+  );
+};
 
 export const App = () => {
   return (
