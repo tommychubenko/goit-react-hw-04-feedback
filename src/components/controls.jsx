@@ -1,20 +1,25 @@
-const controls = ({ handleSetFeddback }) => {
+import { nanoid } from 'nanoid';
+
+const controls = ({ handleSetFeddback, buttons }) => {
   return (
-    <div>
-      <button className="button good" name="good" onClick={handleSetFeddback}>
-        Good
-      </button>
-      <button
-        className="button neutral"
-        name="neutral"
-        onClick={handleSetFeddback}
-      >
-        Neutral
-      </button>
-      <button className="button bad" name="bad" onClick={handleSetFeddback}>
-        Bad
-      </button>
-    </div>
+    buttons && (
+      <div>
+        {Object.keys(buttons).map(button => {
+          return (
+            <button
+              key={nanoid(3)}
+              className={`button ${button}`}
+              name={button}
+              onClick={() => {
+                handleSetFeddback(button);
+              }}
+            >
+              {button}
+            </button>
+          );
+        })}
+      </div>
+    )
   );
 };
 
